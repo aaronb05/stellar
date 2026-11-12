@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CodeJet Demo</title>
+    <link rel="icon" style="img-round" type="image/x-icon" href="static/images/favicon.ico" />
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .demo-privacy {
+            margin: 0;
+            padding: 0.5rem 1rem;
+            font: 0.8rem system-ui, sans-serif;
+            text-align: center;
+        }
+
+        .demo-privacy a { color: #b7b7b7; }
+    </style>
+</head>
+
+<body>
+
+<div class="video-container">
+    <iframe
+        id="stream-player"
+        src="https://customer-0k2chsytrbkmpgjr.cloudflarestream.com/38ccab99e8156adae4abcfbb1d36cc0f/iframe?poster=https%3A%2F%2Fcustomer-0k2chsytrbkmpgjr.cloudflarestream.com%2F38ccab99e8156adae4abcfbb1d36cc0f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen>
+    </iframe>
+</div>
+
+{% if cj_analytics_enabled %}
+<p class="demo-privacy"><a href="/demo-privacy">Demo analytics notice</a></p>
+{% endif %}
+
+<script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
+
+<script>
+    const player = Stream(
+        document.getElementById('stream-player')
+    );
+    window.codejetDemoPlayer = player;
+
+    player.addEventListener('ended', () => {
+        setTimeout(() => {
+            window.location.href = 'https://codejet.app/#contact';
+        }, 1000);
+    });
+</script>
+
+{% if cj_analytics_enabled %}
+<script defer src="{{ url_for('static', filename='assets/js/codejet-analytics.js') }}"
+        data-cj-analytics data-cj-page="/demo"
+        data-cj-video-id="38ccab99e8156adae4abcfbb1d36cc0f"></script>
+{% endif %}
+
+</body>
+</html>
